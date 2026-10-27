@@ -37,7 +37,7 @@ function getCookie(req) {
   const header = req.headers.cookie || "";
   const part = header.split(";").map(v => v.trim())
     .find(v => v.startsWith(COOKIE_NAME + "="));
-  return part ? decodeURIComponent(part.slice(COOKIE_NAME.length + 1)) : "";
+  return part ? part.slice(COOKIE_NAME.length + 1) : "";
 }
 
 function isAuthenticated(req) {
