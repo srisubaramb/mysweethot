@@ -1,0 +1,9 @@
+{
+  "name": "mysweethot-static-site",
+  "private": true,
+  "version": "1.0.0",
+  "description": "My Sweet Hot static website with a Vercel serverless loyalty API",
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.2"
+  }
+}

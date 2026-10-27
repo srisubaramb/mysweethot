@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="My Sweet Hot customer loyalty visit tracker.">
+  <title>Sweet Rewards | My Sweet Hot</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .loyalty-wrap{max-width:1080px;margin:auto}
+    .loyalty-intro{display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:center}
+    .loyalty-intro p:not(.eyebrow){color:var(--muted);font-size:13px;line-height:1.9;max-width:520px}
+    .loyalty-stamp{background:#f4d1ce;padding:30px;min-height:220px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+    .loyalty-stamp:after{content:"♡";font-family:var(--serif);font-size:150px;color:rgba(255,255,255,.6);position:absolute;right:12px;bottom:-58px}
+    .loyalty-stamp strong{font-family:var(--serif);font-size:32px;font-weight:500;line-height:1.15;max-width:260px;z-index:1}
+    .loyalty-stamp span{font-size:9px;font-weight:700;letter-spacing:.18em;z-index:1}
+    .loyalty-layout{display:grid;grid-template-columns:.8fr 1.2fr;gap:20px;align-items:start}
+    .loyalty-card{background:#fff2e7;padding:25px;border:1px solid var(--line)}
+    .loyalty-card h2{font-size:29px;margin:0 0 8px}
+    .loyalty-card>p{font-size:12px;color:var(--muted);margin:0 0 20px}
+    .loyalty-form label{display:block;font-size:10px;font-weight:700;margin:13px 0 6px}
+    .loyalty-form input,.loyalty-form select{width:100%;padding:12px;background:#fffaf4;border:1px solid #e3d2c7;color:var(--ink);font:inherit;font-size:13px;min-height:44px}
+    .loyalty-form .button{margin-top:16px}
+    .loyalty-message{font-size:12px;padding:11px 13px;margin:0 0 16px;background:#fffaf4;border-left:3px solid var(--coral);overflow-wrap:anywhere}
+    .loyalty-message[hidden],.customer-result[hidden]{display:none}
+    .customer-result{background:var(--cream);border:1px solid var(--line);padding:20px;margin-top:20px}
+    .customer-result h3{font-family:var(--serif);font-weight:500;font-size:25px;margin:0}
+    .loyalty-muted{font-size:11px;color:var(--muted);overflow-wrap:anywhere}
+    .loyalty-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}
+    .loyalty-stat{background:#fff2e7;padding:14px}
+    .loyalty-stat span{display:block;font-size:10px;color:var(--muted);margin-bottom:6px}
+    .loyalty-stat strong{font-size:23px;line-height:1.2}
+    .loyalty-progress{height:7px;background:#e9ddd3;border-radius:20px;overflow:hidden;margin:10px 0}
+    .loyalty-progress span{display:block;height:100%;width:0;background:var(--coral);transition:width .2s}
+    .loyalty-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .loyalty-actions .button{justify-content:space-between;padding:13px}
+    .loyalty-policy{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:24px}
+    .loyalty-policy article{border-top:1px solid var(--line);padding:16px 0}
+    .loyalty-policy strong{font-family:var(--serif);font-size:21px;font-weight:500}
+    .loyalty-policy p{font-size:11px;color:var(--muted);margin:6px 0}
+    @media(max-width:800px){.loyalty-intro,.loyalty-layout{grid-template-columns:1fr}.loyalty-stamp{min-height:170px}.loyalty-policy{grid-template-columns:1fr}.loyalty-card{padding:20px}}
+    @media(max-width:420px){.loyalty-actions{grid-template-columns:1fr}.loyalty-stats{grid-template-columns:1fr 1fr}}
+  </style>
+</head>
+<body>
+<header class="site-header">
+  <a class="brand" href="index.html"><span class="brand-mark">♡</span><span>MY <b>SWEET HOT</b><small>DESSERT CAFÉ</small></span></a>
+  <button class="menu-toggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+  <nav class="nav"><a href="index.html">Home</a><a href="about.html">Our Story</a><a href="menu.html">Menu</a><a href="branches.html">Our Outlets</a><a class="active" href="loyalty.html">Sweet Rewards</a><a class="nav-cta" href="contact.html">Contact us</a></nav>
+</header>
+
+<main>
+  <section class="page-hero page-hero-pink">
+    <p class="eyebrow">A LITTLE THANK-YOU FOR COMING BACK</p>
+    <h1>Every visit<br><em>means a little more.</em></h1>
+    <p>Visit us, collect visits and unlock sweet rewards. Your reward progress is based on visits, not how much you spend.</p>
+    <div class="page-doodle">♡</div>
+  </section>
+
+  <section class="section loyalty-wrap">
+    <div class="loyalty-intro">
+      <div><p class="eyebrow">SWEET REWARDS</p><h2>Good to see you<br><em>again and again.</em></h2><p>Our loyalty program celebrates every visit to My Sweet Hot. Ask a team member to register you or look up your membership using your phone number.</p></div>
+      <div class="loyalty-stamp"><span>MY SWEET HOT · LOYALTY CLUB</span><strong>Small visits.<br>Sweet surprises.</strong><span>MADE FOR YOUR HAPPY MOMENTS ♡</span></div>
+    </div>
+    <div class="loyalty-layout" style="margin-top:42px">
+      <section class="loyalty-card">
+        <h2>Find a member</h2>
+        <p>For staff use. Search using the phone number registered by the customer.</p>
+        <div id="loyaltyMessage" class="loyalty-message" role="status" aria-live="polite" hidden></div>
+        <form id="lookupForm" class="loyalty-form">
+          <label for="lookupPhone">Customer phone number</label>
+          <input id="lookupPhone" inputmode="tel" autocomplete="off" maxlength="20" required placeholder="Enter phone number">
+          <button class="button button-dark" type="submit">Find customer <span>↗</span></button>
+        </form>
+        <div style="border-top:1px solid var(--line);margin:24px 0"></div>
+        <h2>New member?</h2>
+        <p>Register them before recording their first visit.</p>
+        <form id="registerForm" class="loyalty-form">
+          <label for="memberName">Customer name</label>
+          <input id="memberName" maxlength="80" autocomplete="name" required placeholder="Full name">
+          <label for="memberPhone">Phone number</label>
+          <input id="memberPhone" inputmode="tel" autocomplete="tel" maxlength="20" required placeholder="Phone number">
+          <button class="button button-dark" type="submit">Register member <span>↗</span></button>
+        </form>
+      </section>
+
+      <section class="loyalty-card">
+        <p class="eyebrow">MEMBER SNAPSHOT</p>
+        <h2>Your visit progress</h2>
+        <p>Load a member to see visit history and their current reward tier.</p>
+        <div id="customerResult" class="customer-result" hidden>
+          <h3 id="resultName"></h3>
+          <div class="loyalty-muted" id="resultPhone"></div>
+          <div class="loyalty-stats">
+            <div class="loyalty-stat"><span>Total visits</span><strong id="resultVisits">0</strong></div>
+            <div class="loyalty-stat"><span>Reward status</span><strong id="resultTier" style="font-size:16px">Getting started</strong></div>
+          </div>
+          <div class="loyalty-muted" id="progressLabel"></div>
+          <div class="loyalty-progress" aria-label="Progress to next reward"><span id="progressBar"></span></div>
+          <div class="loyalty-muted" id="resultLastVisit"></div>
+          <div class="loyalty-actions">
+            <button id="recordVisitButton" type="button" class="button button-dark">+ Record visit</button>
+            <button id="clearMemberButton" type="button" class="button button-light">Clear member</button>
+          </div>
+        </div>
+        <div id="emptyMember" class="customer-result">
+          <h3>Ready when you are.</h3>
+          <p class="loyalty-muted">Search or register a customer to show their loyalty details here.</p>
+        </div>
+      </section>
+    </div>
+
+    <div class="loyalty-policy">
+      <article><p class="eyebrow">MILESTONE 01</p><strong>5 visits</strong><p>Unlock the first loyalty reward.</p></article>
+      <article><p class="eyebrow">MILESTONE 02</p><strong>10 visits</strong><p>Unlock the premium reward tier.</p></article>
+      <article><p class="eyebrow">THE SIMPLE RULE</p><strong>Every visit counts</strong><p>Rewards depend on verified store visits, not purchase value. Confirm benefits with the store team.</p></article>
+    </div>
+    <p class="small-note">Staff dashboard prototype. Customer records must be connected to a protected shared backend before this page is used with real customers. Do not store real customer details in browser-only storage.</p>
+  </section>
+</main>
+<footer class="footer"><a class="brand brand-footer" href="index.html"><span class="brand-mark">♡</span><span>MY <b>SWEET HOT</b><small>DESSERT CAFÉ</small></span></a><p>Little moments, sweeter.</p><div class="footer-links"><a href="about.html">Our Story</a><a href="menu.html">Menu</a><a href="branches.html">Outlets</a><a href="contact.html">Contact</a></div><small>© <span id="year"></span> My Sweet Hot · mysweethot2024@gmail.com</small></footer>
+<script src="script.js"></script>
+<script src="loyalty.js"></script>
+</body>
+</html>
